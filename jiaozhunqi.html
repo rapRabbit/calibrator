@@ -27,8 +27,22 @@
         .bullet {
             display: none;
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 78px;
+            height: 78px;
+        }
+
+        .reddot {
+            display: none;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        #third, #four{
+            display: none;
         }
     </style>
 </head>
@@ -39,6 +53,7 @@
         <img src="./bullet.png" class="bullet" id="bullet2">
         <img src="./bullet.png" class="bullet" id="bullet3">
         <img src="./bullet.png" class="bullet" id="bullet4">
+        <div class="reddot" id="reddot"></div>
         <div class="right" id="right">
             <div class="middle">
                第一发弹 x轴：<input type="text" id="a1">
@@ -56,7 +71,10 @@
                 第四发弹 x轴：<input type="text" id="a4">
                 y轴：<input type="text" id="b4">
             </div>
-            <div>
+            <br>
+            <div id="text">
+                <text id="third">第三发是意外弹</text>
+                <text id="four">第四发是意外弹</text><br>
                 平均弹着点： <text id="average"></text>
             </div>
             
@@ -82,12 +100,12 @@
     
     inputB1.oninput = function() {
         var a1 = Number(inputA1.value)
-        var a1 = a1 < 0? 5 - Math.abs(a1) : 5 + a1
+        var a1 = a1 < 0? 25 - Math.abs(a1) : 25 + a1
         var b1 = Number(inputB1.value)
-        var b1 = b1 < 0? Math.abs(b1) + 5 : 5 - b1
+        var b1 = b1 < 0? Math.abs(b1) + 25 : 25 - b1
         document.getElementById('bullet1').style.display = 'block';
-        document.getElementById('bullet1').style.top = b1/10 *  height - 5 + 'px'
-        document.getElementById('bullet1').style.left = a1/10 * height - 47 + 'px'
+        document.getElementById('bullet1').style.top = height/50 * b1 + 32 + 'px'
+        document.getElementById('bullet1').style.left = height/50 * a1 - 37 + 'px'
         console.log(height)
         console.log(a1, b1)
         
@@ -101,11 +119,11 @@
         b = (1/2) * (b2 - b1) + b1
         pre_len = Math.sqrt(((a - a2) ** 2) + ((b - b2) ** 2))
         console.log(a, b)
-        var a2 = a2 < 0? 5 - Math.abs(a2) : 5 + a2
-        var b2 = b2 < 0? Math.abs(b2) + 5 : 5 - b2
+        var a2 = a2 < 0? 25 - Math.abs(a2) : 25 + a2
+        var b2 = b2 < 0? Math.abs(b2) + 25 : 25 - b2
         document.getElementById('bullet2').style.display = 'block';
-        document.getElementById('bullet2').style.top = b2/10 * height - 5 + 'px'
-        document.getElementById('bullet2').style.left = a2/10 * height - 47 + 'px'
+        document.getElementById('bullet2').style.top = height/50 * b2 + 32 + 'px'
+        document.getElementById('bullet2').style.left = height/50 * a2 - 37 + 'px'
     }
 
     inputB3.oninput = function() {
@@ -118,14 +136,16 @@
             a = (1/3) * (a3 - a) + a
             b = (1/3) * (b3 - b) + b
             console.log(a, b)
+            document.getElementById('third').style.display = 'none'
         } else {
+            document.getElementById('third').style.display = 'block'
            console.log('第三发是意外弹')
         }
-        var a3 = a3 < 0? 5 - Math.abs(a3) : 5 + a3
-        var b3 = b3 < 0? Math.abs(b3) + 5 : 5 - b3
+        var a3 = a3 < 0? 25 - Math.abs(a3) : 25 + a3
+        var b3 = b3 < 0? Math.abs(b3) + 25 : 25 - b3
         document.getElementById('bullet3').style.display = 'block';
-        document.getElementById('bullet3').style.top = b3/10 * height - 5 + 'px'
-        document.getElementById('bullet3').style.left = a3/10 * height - 47 + 'px'
+        document.getElementById('bullet3').style.top = height/50 * b3 + 32 + 'px'
+        document.getElementById('bullet3').style.left = height/50 * a3 - 37 + 'px'
     }
 
     inputB4.oninput = function() {
@@ -137,20 +157,28 @@
         if( pre_len * 2 + 0.000001 >= cur_len){
             a = (1/3) * (a4 - a) + a
             b = (1/3) * (b4 - b) + b
+            document.getElementById('four').style.display = 'none'
             var average = document.getElementById('average')
-            average.innerText = "(" + a + "," + b + ")"
-            console.log(average)
+            average.innerText = '(' + a + ', ' + b + ')'
         } else {
             console.log('第四发是意外弹')
-            console.log(a, b)
+            document.getElementById('four').style.display = 'block'
             var average = document.getElementById('average')
-            average.innerText = "( " + a + ", " + b + " )"
+            average.innerText = '(' + a + ', ' + b + ')'
         }
-        var a4 = a4 < 0? 5 - Math.abs(a4) : 5 + a4
-        var b4 = b4 < 0? Math.abs(b4) + 5 : 5 - b4
+        var a4 = a4 < 0? 25 - Math.abs(a4) : 25 + a4
+        var b4 = b4 < 0? Math.abs(b4) + 25 : 25 - b4
         document.getElementById('bullet4').style.display = 'block';
-        document.getElementById('bullet4').style.top = b4/10 * height - 5 + 'px'
-        document.getElementById('bullet4').style.left = a4/10 * height - 47 + 'px'
+        document.getElementById('bullet4').style.top = height/50 * b4 + 32 + 'px'
+        document.getElementById('bullet4').style.left = height/50 * a4 - 37 + 'px'
+        var averageA = a
+        var averageB = b
+        averageA = averageA < 0? 25 - Math.abs(averageA) : 25 + averageA
+        averageB = averageB < 0? Math.abs(averageB) + 25 : 25 - averageB
+        document.getElementById('reddot').style.display = 'block';
+        document.getElementById('reddot').style.top = height/50 * averageB + 67 + 'px'
+        document.getElementById('reddot').style.left = height/50 * averageA - 2 + 'px'
+        console.log(averageA, averageB)
     }
      
 
